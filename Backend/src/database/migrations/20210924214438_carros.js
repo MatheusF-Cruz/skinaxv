@@ -5,6 +5,7 @@ exports.up = function (knex) {
         table.string('modelo').notNullable();
         table.string('versao').notNullable();
         table.string('ano').notNullable();
+        table.string('valor').notNullable();
         table.timestamps(true,true);
 
 
