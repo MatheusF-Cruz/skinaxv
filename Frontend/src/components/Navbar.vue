@@ -1,9 +1,11 @@
 <template>
   <div id="nav">
     <router-link to="/" id="logo-url">
-      <img :src="logo" :alt="alt" id="logo">
+      <img :src="logo" id="logo">
     </router-link>
     <router-link to="/">Inicio</router-link>
+    <router-link to="/about">Carros</router-link>
+    <router-link to="/contato">Contato</router-link>
   </div>
 </template>
 
@@ -16,7 +18,7 @@ export default {
 
 <style scoped>
   #nav {
-    background-color: var(--pretoPrincipal);
+    background-color: var(--preto);
     padding: 15px 50px;
     display: flex;
     justify-content: flex-end;
@@ -27,17 +29,17 @@ export default {
     margin-left: 0;
   }
   #logo {
-    width: 50px;
-    height: 50px;
+    width: 90px;
+    height: 60px;
   }
   #nav a {
-    color: var(--amarelo);
+    color: var(--branco);
     text-decoration: none;
     margin: 12px;
-    transition: .5s;
+    transition: .9s;
     font-size: 21px;
   }
   #nav a:hover {
-    color: #fff;
+    color: var(--vermelho);
   }
 </style>
