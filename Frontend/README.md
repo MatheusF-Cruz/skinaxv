@@ -1,4 +1,4 @@
-# skinaxv
+# frontend
 
 ## Project setup
 ```
