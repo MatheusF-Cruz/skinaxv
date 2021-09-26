@@ -4,8 +4,12 @@ exports.up = function (knex) {
         table.integer('marca_id').unsigned().notNullable();
         table.string('modelo').notNullable();
         table.string('versao').notNullable();
-        table.string('ano').notNullable();
+        table.string('combustivel').notNullable();
+        table.string('km').notNullable();
+        table.string('cor').notNullable();
         table.string('valor').notNullable();
+        table.string('local').defaultTo('Itaquaquecetuba/SP')
+        table.string('ano').notNullable()
         table.timestamps(true,true);
 
 

@@ -6,23 +6,26 @@ module.exports = {
     async createcar(req, res, next) {
         try {
             //atribuindo as variaveis do corpo da requisição
-            let { marca, modelo, versao, ano, valor} = req.body
+            let { marca, modelo, versao, combustivel, km,cor,valor,ano} = req.body
             //buscando na database se existe a marca enviada pelo cliente
+            km = `${km}Km`
+            valor = `R$${valor}`
             const marcadb = await knex('marcas').where({ 'nome': marca }).first()
-            let marca_id
             //se nao existir marca insira na database
             if (!marcadb) {
                 await knex('marcas').insert({
                     nome:marca
                 })
-
                 const marcadb = await knex('marcas').where({ 'nome': marca }).first()
                 await knex('carros').insert({
                     marca_id:marcadb.id,
                     modelo,
                     versao,
+                    combustivel,
+                    km,
+                    cor,
+                    valor,
                     ano,
-                    valor
                 })
                 return res.status(201).json({ message: 'Veiculo cadastrado com Sucesso' })
             } else {
@@ -30,8 +33,11 @@ module.exports = {
                     marca_id:marcadb.id,
                     modelo,
                     versao,
+                    combustivel,
+                    km,
+                    cor,
+                    valor,
                     ano,
-                    valor
                 })
                 return res.status(201).json({ message: 'Veiculo cadastrado com Sucesso' })
             }
