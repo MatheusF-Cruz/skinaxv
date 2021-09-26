@@ -9,14 +9,19 @@ module.exports = {
             let { username,password} = req.body
            
             const user = await knex('usuarios').where({ 'usuario': username }).first()
+            console.log(user)
             //se nao existir marca insira na database
-            if (user.usuario === username && user.senha === password){
-                return res.status(200).send({
-                    verification:true
-                })
-                
+            if (user){
+                if (password === user.senha){
+                    req.session.user = {
+                        username: user.usuario,
+                        password: user.password
+                    }
+                }else{
+                    res.redirect("/login")
+                }
             } else {
-                return res.status(400).json({ message: 'LOGIN FAILED' })
+                res.redirect("/login")
             }
         } catch (error) {
             console.log(error)

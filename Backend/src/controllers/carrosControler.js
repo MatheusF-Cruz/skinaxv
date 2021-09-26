@@ -45,5 +45,12 @@ module.exports = {
             console.log(error)
             res.status(500).json({ message: 'erro nao previsto' })
         }
+    },
+    async deletecar(req, res, next){
+            let  car_id  = req.params.id
+            await knex('carros').where('id', car_id).del()
+    
+            return res.status(201).json({ message: 'Veiculo deletado com Sucesso' })
+     
     }
 }
