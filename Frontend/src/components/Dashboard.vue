@@ -3,38 +3,42 @@
     <div>
       <h2>Formulario adicionar carro</h2>
     </div>
-    <form @submit="cadastrarCarro">
+    <form @submit.prevent="cadastrarCarro">
       <div>
-        <p>Titulo</p>
-        <input type="text" placeholder="Titulo" v-model="titulo" />
+        <p>Marca</p>
+        <input type="text" placeholder="Marca" v-model="form.marca" />
       </div>
       <div>
-        <p>Informações</p>
-        <input type="text" placeholder="Informações" v-model="informacoes" />
+        <p>Modelo</p>
+        <input type="text" placeholder="Modelo" v-model="form.modelo" />
       </div>
       <div>
         <p>Ano</p>
-        <input type="text" placeholder="Ano" v-model="ano" />
+        <input type="text" placeholder="Ano" v-model="form.ano" />
+      </div>
+      <div>
+        <p>Versão</p>
+        <input type="text" placeholder="Versão" v-model="form.versao" />
+      </div>
+      <div>
+        <p>Combustivel</p>
+        <input
+          type="text"
+          placeholder="Combustivel"
+          v-model="form.combustivel"
+        />
       </div>
       <div>
         <p>Km</p>
-        <input type="text" placeholder="Km" v-model="km" />
+        <input type="text" placeholder="Km" v-model="form.km" />
       </div>
       <div>
         <p>Cor</p>
-        <input type="text" placeholder="Cor" v-model="cor" />
-      </div>
-      <div>
-        <p>Tipo</p>
-        <input type="text" placeholder="Tipo" v-model="tipo" />
+        <input type="text" placeholder="Cor" v-model="form.cor" />
       </div>
       <div>
         <p>Valor</p>
-        <input type="text" placeholder="Valor" v-model="valor" />
-      </div>
-      <div>
-        <p>Local</p>
-        <input type="text" placeholder="Local" v-model="local" />
+        <input type="text" placeholder="Valor" v-model="form.valor" />
       </div>
       <button type="submit">Cadastrar</button>
     </form>
@@ -42,37 +46,42 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Dashboard",
   data() {
     return {
-      titulo: "",
-      informacoes: "",
-      ano: "",
-      km: "",
-      cor: "",
-      tipo: "",
-      preco: "",
-      local: "",
+      form: {
+        marca: "",
+        modelo: "",
+        versao: "",
+        combustivel: "",
+        km: "",
+        cor: "",
+        valor: "",
+        ano: "",
+      },
     };
   },
   methods: {
-    async cadastrarCarro(e) {
-      e.preventDefault();
+    async cadastrarCarro() {
+      const data = this.form;
 
-      const data = {
-        titulo: this.titulo,
-        informacoes: this.informacoes,
-        ano: this.ano,
-        km: this.km,
-        cor: this.cor,
-        tipo: this.tipo,
-        preco: this.preco,
-        local: this.local,
+      let url = "http://localhost:3333/insertcarros";
+      let username = "skinaxv";
+      let password = "fevereiro98";
+
+      try {
+        const res = await axios.post(url, data, {
+          auth: {
+            username: username,
+            password: password,
+          },
+        });
+      } catch (error) {
+        console.log(error.message);
       }
-      //transformando objeto em texto
-        const dataJson = JSON.stringify(data);
-        console.log(dataJson)
     },
   },
 };
