@@ -14,7 +14,7 @@ const auth = require('./middlewares/auth')
 routes.get('/carros', getCars.index)
 routes.get('/carros/:id', getCar.index)
 
-routes.post('/insertcarros', auth, carrosController.createcar)
+routes.post('/insertcarros', carrosController.createcar)
 
 routes.get('/marca/:id', getMarca.index)
 
