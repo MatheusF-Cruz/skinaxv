@@ -20,6 +20,5 @@ routes.get('/marca/:id', getMarca.index)
 
 routes.post('/auth',login.index)
 
-
 routes.delete('/deletecarros/:id', auth, carrosController.deletecar)
 module.exports = routes
