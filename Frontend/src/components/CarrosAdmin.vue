@@ -141,7 +141,7 @@ data() {
 }
 
 .cards-front .veiculos img {
-  width: 300px;
+  width: 100%;
   max-height: 220px;
 }
 

@@ -6,7 +6,8 @@ module.exports = {
     async createcar(req, res, next) {
         try {
             //atribuindo as variaveis do corpo da requisição
-            let { marca, modelo, versao, combustivel, km,cor,valor,ano} = req.body
+            console.log(req.body)
+            let { marca, modelo, versao, combustivel, km,cor,valor,ano } = req.body
             //buscando na database se existe a marca enviada pelo cliente
             km = `${km}Km`
             valor = `R$${valor}`
