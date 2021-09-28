@@ -8,7 +8,9 @@ const basicAuth = require('./helpers/basic-auth')
 const app = express()
 
 
-app.use(cors())
+
+
+app.use(cors({credentials: true, origin: 'http://localhost:8080'}))
 // app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(basicAuth)
 

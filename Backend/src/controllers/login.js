@@ -7,7 +7,7 @@ module.exports = {
         try {
             //atribuindo as variaveis do corpo da requisição
             let { username,password} = req.body
-           
+            console.log(username+" / "+ password)
             const user = await knex('usuarios').where({ 'usuario': username }).first()
             console.log(user)
             //se nao existir marca insira na database
