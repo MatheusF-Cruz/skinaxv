@@ -2,6 +2,7 @@ const express = require('express')
 const routes = require('./routes')
 const cors = require('cors')
 const basicAuth = require('./helpers/basic-auth')
+const session = require("express-session");
 // const swaggerDocument = require('./swagger/swagger.json')
 // const swaggerUi = require('swagger-ui-express')
 
