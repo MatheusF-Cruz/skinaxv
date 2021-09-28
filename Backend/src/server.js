@@ -7,6 +7,11 @@ const basicAuth = require('./helpers/basic-auth')
 
 const app = express()
 
+app.use(session({
+    secret: "1234", cookie: { maxAge: 30000000 },
+    resave: true,
+    saveUninitialized: true
+}));
 
 
 
