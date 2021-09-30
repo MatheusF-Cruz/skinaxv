@@ -27,8 +27,6 @@ export default {
         username: this.username,
         password: this.password
     }
-    console.log(data)
-      
 
       let url = "http://localhost:3333/auth";
       let username = "skinaxv";
@@ -42,6 +40,7 @@ export default {
           },
           withCredentials: true
         });
+        console.log(res)
       } catch (error) {
         console.log(error.message);
       }

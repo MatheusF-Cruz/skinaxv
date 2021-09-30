@@ -10,7 +10,8 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    beforeEnter: requireAuth
   },
   {
     path: '/login',
@@ -23,5 +24,12 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
+
+//
+function requireAuth(to, from, next) {
+  const { $cookies } = router.app.config.globalProperties
+  console.log('_ga', $cookies.get('_ga'))
+  next()
+}
 
 export default router

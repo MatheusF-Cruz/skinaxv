@@ -100,7 +100,7 @@ data() {
     },
     async deleteCar(id){
       console.log(id)
-      let url = `http://localhost:3333/deletecarros/:id/${carro.id}`;
+      let url = `http://localhost:3333/deletecarros/${carro.id}`;
       let username = "skinaxv";
       let password = "fevereiro98";
 

@@ -13,7 +13,7 @@ module.exports = {
             //se nao existir marca insira na database
             if (user){
                 if (password === user.senha){
-                    req.session.user = {
+                    return req.sessioncookies.user = {
                         username: user.usuario,
                         password: user.password
                     }
