@@ -18,10 +18,3 @@ export default {
 }
 </script>
 
-<style scopped>
-
-body{
-  background-color: #FFFFFF;
-}
-
-</style>

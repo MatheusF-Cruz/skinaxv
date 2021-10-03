@@ -3,22 +3,25 @@
     <div>
       <div class="container">
         <div class="forms">
+          <div class="logo">
+            <img src="/img/logo.png" alt="logo">
+          </div>
           <div class="inputs">
-            <label for="user">Digite seu usuário: </label>
+            <label for="user">Usuário: </label>
             <input
               type="text"
               placeholder="Digite seu usuário"
               v-model="username"
               required
             />
-            <label for="password">Digite sua senha: </label>
+            <label for="password">Senha: </label>
             <input
               type="password"
               placeholder="Digite sua senha"
               v-model="password"
               required
             />
-            <button type="submit">Entrar</button>
+            <button class="entrar" type="submit">Entrar</button>
           </div>
         </div>
       </div>
@@ -68,13 +71,22 @@ export default {
 <style scoped>
 
   .forms {
-    max-width: 500px;
+    max-width: 540px;
     margin: 0 auto;
-    border: 1px solid blue;
+    padding: 25px;
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 1px 2px 5px #FFFFFF;
+  }
+
+  .logo img{
+    max-width: 100%;
   }
 
   label {
     border-left: 5px solid red;
+    color: #FFFFFF;
+    margin: 8px 0 8px 0;
   }
 
   label, input{
@@ -84,6 +96,23 @@ export default {
     width: 100%;
     padding: 5px 5px;
     font-size: 25px;
+  }
+
+  .entrar{
+    width: 100%;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    background-color: var(--preto);
+    padding: 15px;
+    font-size: 25px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: 0.8s;
+  }
+  .entrar:hover{
+    border: 1px solid rgb(255, 0, 0);
+    color: rgb(255, 0, 0);
+    background-color: transparent;
   }
 
 </style>

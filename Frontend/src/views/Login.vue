@@ -14,3 +14,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.login{
+    background-color: black !important;
+    height: 100%;
+    padding-bottom: 30px;
+}
+</style>
