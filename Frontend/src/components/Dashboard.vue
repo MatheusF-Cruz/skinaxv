@@ -5,12 +5,12 @@
       <div class="formulario">
         <div class="inputs">
           <p>Marca</p>
-          <select>
-            <option value="fiat">Fiat</option>
-            <option value="fiat">Chevrolet</option>
-            <option value="fiat">Ford</option>
-            <option value="fiat">Toyota</option>
-            <option value="fiat">Honda</option>
+          <select v-model="form.marca">
+            <option value="Fiat">Fiat</option>
+            <option value="Chevrolet">Chevrolet</option>
+            <option value="Ford">Ford</option>
+            <option value="Toyota">Toyota</option>
+            <option value="Honda">Honda</option>
           </select>
           <div>
             <p>Modelo</p>
@@ -26,16 +26,16 @@
           </div>
           <div>
             <p>Combustivel</p>
-            <select>
-            <option value="fiat">Gasolina</option>
-            <option value="fiat">Alcool</option>
-            <option value="fiat">Flex</option>
-            <option value="fiat">Disel</option>
+            <select v-model="form.combustivel">
+            <option value="Gasolina">Gasolina</option>
+            <option value="Alcool">Alcool</option>
+            <option value="Flex">Flex</option>
+            <option value="Disel">Disel</option>
           </select>
           </div>
           <div>
             <p>Km</p>
-            <input type="number"/>
+            <input type="number" v-model="form.km"/>
           </div>
           <div>
             <p>Cor</p>
@@ -45,7 +45,14 @@
             <p>Valor</p>
             <input type="text" placeholder="Valor" v-model="form.valor" />
           </div>
+          <div>
+            <p>Imagem</p>
+            <input type="text" placeholder="Insira o link da imagem" v-model="imagem"/>
+          </div>
+          <div class="botoes">
           <button class="cadastrar" type="submit">Cadastrar</button>
+          <button class="fechar" @click="$emit('emitFechar')">Fechar</button>
+          </div>
         </div>
       </div>
      </form>
@@ -57,6 +64,9 @@ import axios from "axios";
 
 export default {
   name: "Dashboard",
+  
+  emits: ['emitFechar'],
+
   data() {
     return {
       form: {
@@ -69,6 +79,7 @@ export default {
         valor: "",
         ano: "",
       },
+        imagem: "",
     };
   },
   methods: {
@@ -103,6 +114,7 @@ h2{
 
 .formulario {
   display: flex;
+  margin-bottom: 35px;
 }
 
 .inputs{
@@ -146,5 +158,22 @@ h2{
   color: var(--cinza);
   border: 1px solid var(--cinza);
 }
+
+.fechar{
+  border: none;
+  background-color: var(--cinza);
+  color: var(--branco);
+  font-size: 15px;
+  padding: 10px;
+  margin-top: 15px;
+  width: 25%;
+  cursor: pointer;
+}
+.fechar:hover{
+  background-color: transparent;
+  color: var(--cinza);
+  border: 1px solid var(--cinza);
+}
+
 
 </style>

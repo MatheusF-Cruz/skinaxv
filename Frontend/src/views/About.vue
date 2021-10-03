@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <BotoesAdmin @emitButtonForm="mostrarFormulario" @emitButtonCar="mostrarVeiculos"/>
-    <Dashboard v-if="exibirForm === true"/> 
+    <Dashboard v-if="exibirForm === true" @emitFechar="mostrarFormulario"/> 
     <CarrosAdmin v-if="exibirCar === true"/>
   </div>
 </template>
@@ -28,6 +28,7 @@ export default {
     CarrosAdmin,
     BotoesAdmin,
   },
+
   methods: {
     async mostrarFormulario() {
     console.log(this.exibirForm)
