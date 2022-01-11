@@ -24,7 +24,7 @@
           </p>
           <div class="botoes">
             <button>Editar</button>
-            <button @click="deleteCar(carro.id)">Remover</button>
+            <button @click="deleteCar(dados.id)">Remover</button>
           </div>
           </div>
       </div>
@@ -100,7 +100,7 @@ data() {
     },
     async deleteCar(id){
       console.log(id)
-      let url = `http://localhost:3333/deletecarros/${carro.id}`;
+      let url = `http://localhost:3333/deletecarros/${id}`;
       let username = "skinaxv";
       let password = "fevereiro98";
 
