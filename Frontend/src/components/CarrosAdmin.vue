@@ -1,47 +1,55 @@
 <template>
   <div class="container">
-    <div class="cards-front" v-for="dados in data" :key="dados.id" @mouseover="mostrarBotoes" @mouseleave="ocultarBotoes">
+    <div
+      class="cards-front"
+      v-for="carro in inventario"
+      :key="carro.id"
+      @mouseover="mostrarBotoes"
+      @mouseleave="ocultarBotoes"
+    >
       <div class="veiculos">
         <img src="/img/carro.jpeg" alt="" />
         <div class="descricao">
-          <h2 class="titulo">{{ dados.marca_id }} {{ dados.modelo }}</h2>
-          <p class="info">{{ dados.versao }}</p>
+          <h2 class="titulo">{{ carro.marca_id }} {{ carro.modelo }}</h2>
+          <p class="info">{{ carro.versao }}</p>
           <div class="anoKm">
             <div class="icones">
               <p>
-                <i class="far fa-calendar">{{ " " + dados.ano }}</i>
+                <i class="far fa-calendar">{{ " " + carro.ano }}</i>
               </p>
-              <p><i class="fas fa-tachometer-alt"></i> {{ " " + dados.km }}</p>
-              <p><i class="fas fa-tint"></i> {{ " " + dados.cor }}</p>
+              <p><i class="fas fa-tachometer-alt"></i> {{ " " + carro.km }}</p>
+              <p><i class="fas fa-tint"></i> {{ " " + carro.cor }}</p>
               <p>
-                <i class="fas fa-gas-pump"></i> {{ " " + dados.combustivel }}
+                <i class="fas fa-gas-pump"></i> {{ " " + carro.combustivel }}
               </p>
             </div>
           </div>
-          <p class="preco"><i class="fas fa-tag"></i>{{ " " + dados.valor }}</p>
+          <p class="preco"><i class="fas fa-tag"></i>{{ " " + carro.valor }}</p>
           <p class="local">
-            <i class="fas fa-map-marker-alt"></i>{{ " " + dados.local }}
+            <i class="fas fa-map-marker-alt"></i>{{ " " + carro.local }}
           </p>
           <div class="botoes">
             <button>Editar</button>
-            <button @click="deleteCar(dados.id)">Remover</button>
+            <button @click="deleteCar(carro.id)">Remover</button>
           </div>
-          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import ListarCarros from "../service/listarCarros";
+import DeletarCarro from "../service/deletarCarro";
+import ListarMarcas from "../service/listarMarcas";
 
 export default {
   name: "Banner",
 
-data() {
+  data() {
     return {
       login: 1,
-      data: null,
+      inventario: null,
       marca: "",
       versao: "",
       combustivel: "",
@@ -50,75 +58,40 @@ data() {
       valor: "",
       ano: "",
       local: "",
-    };
-  },
-  methods: {
-     async getCarros() {
-      let url = "http://localhost:3333/carros";
-      let username = "skinaxv";
-      let password = "fevereiro98";
+     };
+    },
 
-      try {
-        const res = await axios.get(url, {
-          auth: {
-            username: username,
-            password: password,
-          },
-        });
-        return res.data;
-      } catch (error) {
-        console.log(error.message);
+    async mounted() {
+    await this.listarInventario()
+    },
+
+    methods: {
+    async getCarros() {
+      const res = await ListarCarros.listarCarros();
+      return res;
+    },
+    async insertData(inventario) {
+      this.inventario = inventario;
+      console.log(this.inventario)
+    },
+    async listarInventario(){
+      const inventario = await this.getCarros();
+      const gmarcas = await this.getMarcas(inventario);
+      await this.insertData(gmarcas)
+    },
+    async deleteCar(id) {
+      await DeletarCarro.deletarCarro(id);
+      await this.listarInventario();
+    },
+    async getMarcas(inventario) {
+      for (let carro of inventario) {
+        const res = await ListarMarcas.listarMarcas(carro.marca_id);
+        let nome = res.data;
+        nome = nome[0].nome;
+        carro.marca_id = nome;
       }
+      return inventario;
     },
-    insertData(data) {
-      this.data = data;
-    },
-
-    async getMarcas(data) {
-      
-      for (let carro of data) {
-        let url = `http://localhost:3333/marca/${carro.marca_id}`;
-        let username = "skinaxv";
-        let password = "fevereiro98";
-
-        try {
-          const res = await axios.get(url, {
-            auth: {
-              username: username,
-              password: password,
-            },
-          });
-
-          let nome = res.data;
-          nome = nome[0].nome;
-          carro.marca_id = nome;
-        } catch (error) {
-          console.log(error.message);
-        }
-      }
-      return data;
-    },
-    async deleteCar(id){
-      console.log(id)
-      let url = `http://localhost:3333/deletecarros/${id}`;
-      let username = "skinaxv";
-      let password = "fevereiro98";
-
-      const res = await axios.delete(url,{
-        auth:{
-          username: username,
-          password: password,
-        },
-      })
-      
-
-    },
-  },
-
-  async mounted() {
-    const data = await this.getCarros();
-    const gmarcas = await this.getMarcas(data);
-    this.insertData(gmarcas);  
   },
 };
 </script>
@@ -151,11 +124,14 @@ data() {
 
 .veiculos {
   max-width: 300px;
-  box-shadow: 5px 10px 8px 10px #00000020;
+  box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.25);
   border-radius: 8px;
+  overflow: hidden;
+  transition: 0.5s;
 }
+
 .veiculos:hover {
-  border: 1px solid var(--preto);
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.466);
 }
 
 .titulo {
@@ -195,23 +171,21 @@ data() {
 }
 
 .botoes {
-    margin-top: 15px;
-    border-top: 1px solid var(--preto);
-    text-align: center;
+  margin-top: 15px;
+  text-align: center;
 }
 
-.botoes button{
-    padding: 10px;
-    margin: 15px 20px 10px 0;
-    border: 1px solid var(--preto);
-    color: var(--branco);
-    font-size: 15px;
-    background-color: var(--cinza);
-    cursor: pointer;
+.botoes button {
+  padding: 10px;
+  margin: 15px 20px 10px 0;
+  border: 1px solid var(--preto);
+  color: var(--branco);
+  font-size: 15px;
+  background-color: var(--cinza);
+  cursor: pointer;
 }
-.botoes button:hover{
-   background-color: transparent;
-   color: var(--vermelho);
+.botoes button:hover {
+  background-color: transparent;
+  color: var(--vermelho);
 }
-
 </style>

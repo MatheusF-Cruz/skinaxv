@@ -1,9 +1,11 @@
 <template>
     <div class="botoes">
+      <h3>Dashboard</h3>
+      <p>Bem vindo de volta Israel</p>
+      <p>Você possui 30 carros cadastrados</p>
       <button class="buttonHS" @click="$emit('emitButtonForm')">{{ buttonForm }}</button>
       <button class="buttonHS" @click="$emit('emitButtonCar')">{{ buttonCar }}</button>
     </div>
-  
 </template>
 
 <script>
@@ -17,6 +19,7 @@ export default {
       buttonCar: "Visualizar Veiculos",
     };
   },
+
 };
 </script>
 
@@ -28,16 +31,16 @@ export default {
 
 .buttonHS{
   background-color: var(--cinza);
-  border: none;
+  border: 1px solid var(--cinza);
   color: var(--branco);
-  padding: 10px;
+  border-radius: 20px;
+  padding: 7px 20px;
   font-size: 25px;
   margin: 25px;
   cursor: pointer;
 }
 .buttonHS:hover{
   background-color: transparent;
-  border: 1px solid var(--cinza);
   color: var(--cinzao);
 }
 </style>

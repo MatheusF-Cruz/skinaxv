@@ -1,8 +1,20 @@
 <template>
   <div class="container">
-    <div class="cards-front" v-for="dados in data" :key="dados.id" @mouseover="mostrarBotoes" @mouseleave="ocultarBotoes">
-      <div class="veiculos">
-        <img src="/img/carro.jpeg" alt="" />
+      <div class="veiculos"
+      v-for="dados in data"
+      :key="dados.id"   
+      >
+        <div class="fotos">
+          <div class="foto">
+            <img src="/img/carro.jpeg" alt="" />
+          </div>
+          <div class="foto s1">
+            <img src="/img/carro.jpeg" alt="" />
+          </div>
+          <div class="foto">
+            <img src="/img/carro.jpeg" alt="" />
+          </div>
+        </div>
         <div class="descricao">
           <h2 class="titulo">{{ dados.marca_id }} {{ dados.modelo }}</h2>
           <p class="info">{{ dados.versao }}</p>
@@ -22,10 +34,9 @@
           <p class="local">
             <i class="fas fa-map-marker-alt"></i>{{ " " + dados.local }}
           </p>
-          </div>
+        </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -34,7 +45,7 @@ import axios from "axios";
 export default {
   name: "Banner",
 
-data() {
+  data() {
     return {
       data: null,
       marca: "",
@@ -48,7 +59,7 @@ data() {
     };
   },
   methods: {
-     async getCarros() {
+    async getCarros() {
       let url = "http://localhost:3333/carros";
       let username = "skinaxv";
       let password = "fevereiro98";
@@ -70,7 +81,6 @@ data() {
     },
 
     async getMarcas(data) {
-      
       for (let carro of data) {
         let url = `http://localhost:3333/marca/${carro.marca_id}`;
         let username = "skinaxv";
@@ -93,27 +103,12 @@ data() {
       }
       return data;
     },
-    async deleteCar(id){
-      console.log(id)
-      let url = `http://localhost:3333/deletecarros/${carro.id}`;
-      let username = "skinaxv";
-      let password = "fevereiro98";
-
-      const res = await axios.delete(url,{
-        auth:{
-          username: username,
-          password: password,
-        },
-      })
-      
-
-    },
   },
 
   async mounted() {
     const data = await this.getCarros();
     const gmarcas = await this.getMarcas(data);
-    this.insertData(gmarcas);  
+    this.insertData(gmarcas);
   },
 };
 </script>
@@ -123,7 +118,6 @@ data() {
   margin: 0;
   padding: 0;
 }
-
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -131,28 +125,40 @@ data() {
   justify-content: center;
 }
 
-.cards-front {
-  margin: 10px;
-}
-
-.cards-front .veiculos img {
-  width: 300px;
-  max-height: 220px;
-}
-
-.descricao {
-  padding: 5px 0 5px 15px;
-}
-
 .veiculos {
-  max-width: 300px;
+  width: 320px;
+  margin: 15px;
   box-shadow: 5px 10px 8px 10px #00000020;
   border-radius: 8px;
+  overflow: hidden;
+}
+
+.foto img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+}
+
+.fotos {
+  display: flex;
+  overflow-x: auto; 
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.foto {
+  width: 320px;
+  flex: none;
+  scroll-snap-align: start;
 }
 
 .titulo {
   font-weight: bold;
   font-size: 20px;
+}
+
+.descricao {
+  padding: 5px 0 5px 15px;
 }
 
 .anoKm {
@@ -185,5 +191,7 @@ data() {
 .icones i {
   margin-top: 5px;
 }
-
+.local {
+  margin-bottom: 7px;
+}
 </style>

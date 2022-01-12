@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="marcas">
+      <div>
+        <h2>FILTRE POR MARCA</h2>
+      </div>
       <div class="imagens">
-          <div>
-              <h2 align="center"><strong>Filtre por marcas</strong></h2><hr>
-          </div>
         <img src="/img/chevrolet.png" alt="Chevrolet" />
-        <img src="/img/fiat.png" alt="Fiat" height="40px"/>
+        <img src="/img/fiat.png" alt="Fiat" height="40px" />
         <img src="/img/ford.png" alt="Ford" />
       </div>
     </div>
@@ -21,19 +21,23 @@ export default {
 
 <style scopped>
 .marcas {
-  display: flex;
+  align-items: center;
   margin: 25px;
 }
-
 .imagens {
-  margin: 0 auto;
-  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
 .imagens img {
   max-width: 100px;
   margin-left: 35px;
   cursor: pointer;
+}
+h2 {
+  font-size: 25px;
+  text-align: center;
+  font-weight: 500;
 }
 </style>
 
