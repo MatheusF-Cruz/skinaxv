@@ -1,18 +1,18 @@
 <template>
   <div class="home">
     <Marcas />
-    <Banner />
+    <ListaCarros />
   </div>
 </template>
 
 <script>
-import Banner from '../components/Banner.vue'
+import ListaCarros from '../components/ListaCarros.vue'
 import Marcas from '../components/Marcas.vue'
 
 export default {
   name: 'Home',
   components: {
-    Banner,
+    ListaCarros,
     Marcas,
   }
 }

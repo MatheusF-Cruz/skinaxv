@@ -1,8 +1,8 @@
 <template>
   <div class="container">
       <div class="veiculos"
-      v-for="dados in data"
-      :key="dados.id"   
+      v-for="carro in inventario"
+      :key="carro.id"   
       >
         <div class="fotos">
           <div class="foto">
@@ -16,23 +16,23 @@
           </div>
         </div>
         <div class="descricao">
-          <h2 class="titulo">{{ dados.marca_id }} {{ dados.modelo }}</h2>
-          <p class="info">{{ dados.versao }}</p>
+          <h2 class="titulo">{{ carro.marca_id }} {{ carro.modelo }}</h2>
+          <p class="info">{{ carro.versao }}</p>
           <div class="anoKm">
             <div class="icones">
               <p>
-                <i class="far fa-calendar">{{ " " + dados.ano }}</i>
+                <i class="far fa-calendar">{{ " " + carro.ano }}</i>
               </p>
-              <p><i class="fas fa-tachometer-alt"></i> {{ " " + dados.km }}</p>
-              <p><i class="fas fa-tint"></i> {{ " " + dados.cor }}</p>
+              <p><i class="fas fa-tachometer-alt"></i> {{ " " + carro.km }}</p>
+              <p><i class="fas fa-tint"></i> {{ " " + carro.cor }}</p>
               <p>
-                <i class="fas fa-gas-pump"></i> {{ " " + dados.combustivel }}
+                <i class="fas fa-gas-pump"></i> {{ " " + carro.combustivel }}
               </p>
             </div>
           </div>
-          <p class="preco"><i class="fas fa-tag"></i>{{ " " + dados.valor }}</p>
+          <p class="preco"><i class="fas fa-tag"></i>{{ " " + carro.valor }}</p>
           <p class="local">
-            <i class="fas fa-map-marker-alt"></i>{{ " " + dados.local }}
+            <i class="fas fa-map-marker-alt"></i>{{ " " + carro.local }}
           </p>
         </div>
       </div>
@@ -40,14 +40,15 @@
 </template>
 
 <script>
-import axios from "axios";
+import ListarCarros from "../service/listarCarros";
+import ListarMarcas from "../service/listarMarcas";
 
 export default {
-  name: "Banner",
+  name: "ListaCarros",
 
   data() {
     return {
-      data: null,
+      inventario: null,
       marca: "",
       versao: "",
       combustivel: "",
@@ -58,57 +59,32 @@ export default {
       local: "",
     };
   },
+  async mounted() {
+    await this.listarInventario()
+  },
   methods: {
     async getCarros() {
-      let url = "http://localhost:3333/carros";
-      let username = "skinaxv";
-      let password = "fevereiro98";
-
-      try {
-        const res = await axios.get(url, {
-          auth: {
-            username: username,
-            password: password,
-          },
-        });
-        return res.data;
-      } catch (error) {
-        console.log(error.message);
+      const res = await ListarCarros.listarCarros();
+      return res;
+    },
+    async insertData(inventario) {
+      this.inventario = inventario;
+      console.log(this.inventario)
+    },
+    async listarInventario(){
+      const inventario = await this.getCarros();
+      const gmarcas = await this.getMarcas(inventario);
+      await this.insertData(gmarcas)
+    },
+    async getMarcas(inventario) {
+      for (let carro of inventario) {
+        const res = await ListarMarcas.listarMarcas(carro.marca_id);
+        let nome = res.data;
+        nome = nome[0].nome;
+        carro.marca_id = nome;
       }
+      return inventario;
     },
-    insertData(data) {
-      this.data = data;
-    },
-
-    async getMarcas(data) {
-      for (let carro of data) {
-        let url = `http://localhost:3333/marca/${carro.marca_id}`;
-        let username = "skinaxv";
-        let password = "fevereiro98";
-
-        try {
-          const res = await axios.get(url, {
-            auth: {
-              username: username,
-              password: password,
-            },
-          });
-
-          let nome = res.data;
-          nome = nome[0].nome;
-          carro.marca_id = nome;
-        } catch (error) {
-          console.log(error.message);
-        }
-      }
-      return data;
-    },
-  },
-
-  async mounted() {
-    const data = await this.getCarros();
-    const gmarcas = await this.getMarcas(data);
-    this.insertData(gmarcas);
   },
 };
 </script>
